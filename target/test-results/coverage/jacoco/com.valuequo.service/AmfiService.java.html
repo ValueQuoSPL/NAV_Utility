@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmfiService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Amfi</a> &gt; <a href="index.source.html" class="el_package">com.valuequo.service</a> &gt; <span class="el_source">AmfiService.java</span></div><h1>AmfiService.java</h1><pre class="source lang-java linenums">package com.valuequo.service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.*;
+
+import javax.persistence.EntityManagerFactory;
+import javax.transaction.Transactional;
+
+import com.valuequo.domain.Amc;
+import com.valuequo.domain.Amfi;
+import com.valuequo.repository.AmcRepository;
+import com.valuequo.repository.AmfiRepository;
+import com.valuequo.service.dto.AmfiDTO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AmfiService {
+
+    @Autowired
+    private AmfiRepository amfiRepository;
+
+    @Autowired
+    private AmcRepository amcRepository;
+
+    private SessionFactory hibernateFactory;
+    
+<span class="fc" id="L33">    Session session = null;</span>
+    
+    Transaction tx;
+    
+    
+<span class="fc" id="L38">    AmfiService(EntityManagerFactory factory) {</span>
+<span class="fc" id="L39">        this.hibernateFactory = factory.unwrap(SessionFactory.class);</span>
+<span class="fc" id="L40">    }</span>
+    
+    @Transactional
+    @Modifying
+    public void save(ArrayList&lt;AmfiDTO&gt; al) {
+<span class="nc" id="L45">        List&lt;Amfi&gt; amfiDTO = amfiRepository.findAll();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (amfiDTO.isEmpty()) {</span>
+<span class="nc" id="L47">            int size = al.size();</span>
+<span class="nc" id="L48">            int count = 0;</span>
+<span class="nc" id="L49">            ArrayList&lt;Amfi&gt; amf = new ArrayList&lt;Amfi&gt;();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            for (AmfiDTO data : al) {</span>
+<span class="nc" id="L51">                Amfi amfi = new Amfi();</span>
+<span class="nc" id="L52">                amfi.setDate(data.getDate());</span>
+<span class="nc" id="L53">                amfi.setSchemeCode(data.getSchemeCode());</span>
+<span class="nc" id="L54">                amfi.setISINDivPayoutISINGrowth(data.getISINDivPayoutISINGrowth());</span>
+<span class="nc" id="L55">                amfi.setISINDivReinvestment(data.getISINDivReinvestment());</span>
+<span class="nc" id="L56">                amfi.setSchemeName(data.getSchemeName());</span>
+<span class="nc" id="L57">                amfi.setDay1(data.getDay1());</span>
+<span class="nc" id="L58">                amfi.setDate(data.getDate());</span>
+<span class="nc" id="L59">                amf.add(amfi);</span>
+<span class="nc bnc" id="L60" title="All 4 branches missed.">                if ((count + 1) % 1000 == 0 || (count + 1) == size) {</span>
+<span class="nc" id="L61">                    amfiRepository.save(amf);</span>
+                }
+<span class="nc" id="L63">                count++;</span>
+            }
+<span class="nc" id="L65">        } else {</span>
+<span class="nc" id="L66">            session = this.hibernateFactory.openSession();</span>
+<span class="nc" id="L67">            ArrayList&lt;Amfi&gt; amf1 = new ArrayList&lt;Amfi&gt;();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            for (AmfiDTO result : al) {</span>
+<span class="nc" id="L69">                Amfi amfi = new Amfi();</span>
+<span class="nc" id="L70">                amfi.setDate(result.getDate());</span>
+<span class="nc" id="L71">                amfi.setSchemeCode(result.getSchemeCode());</span>
+<span class="nc" id="L72">                amfi.setDay1(result.getDay1());</span>
+
+<span class="nc" id="L74">                String schemeCode = amfi.getSchemeCode();</span>
+<span class="nc" id="L75">                String date = amfi.getDate();</span>
+<span class="nc" id="L76">                String nav = amfi.getDay1();</span>
+
+<span class="nc" id="L78">                Date day = new Date(date);</span>
+<span class="nc" id="L79">                int dayValue = day.getDate();</span>
+<span class="nc" id="L80">                String dayVal = Integer.toString(dayValue);</span>
+<span class="nc" id="L81">                String days = &quot;day&quot; + dayVal;</span>
+<span class="nc" id="L82">                update(schemeCode, nav, days);</span>
+            }
+<span class="nc" id="L84">            session.close();</span>
+        }
+<span class="nc" id="L86">    }</span>
+
+    private Transaction OpenDBConnection() {
+<span class="nc" id="L89">        session = this.hibernateFactory.openSession();</span>
+<span class="nc" id="L90">        tx = session.beginTransaction();</span>
+<span class="nc" id="L91">        return tx;</span>
+    }
+
+    private Transaction closeDBConnection(Transaction txx) {
+<span class="nc" id="L95">        txx.commit();</span>
+<span class="nc" id="L96">        session.close();</span>
+<span class="nc" id="L97">        return txx;</span>
+    }
+
+    public void update(String schemeCode, String nav, String days) {
+<span class="nc" id="L101">        String str1 = new String(days);</span>
+<span class="nc" id="L102">        Date date = new Date();</span>
+<span class="nc" id="L103">        int dayValue = date.getDate();</span>
+<span class="nc" id="L104">        String dayVal = Integer.toString(dayValue);</span>
+<span class="nc" id="L105">        String currentDay = &quot;day&quot; + dayVal;</span>
+<span class="nc" id="L106">        String str2 = new String(currentDay);</span>
+<span class="nc" id="L107">        boolean isEqual = str1.equals(str2);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (isEqual) {</span>
+            try {
+                // session = this.hibernateFactory.openSession();
+<span class="nc" id="L111">                tx = session.beginTransaction();</span>
+<span class="nc" id="L112">                String sqlQuery = &quot;UPDATE Amfi a SET a.&quot; + days + &quot;=&quot; + nav + &quot; where a.SchemeCode = &quot; + schemeCode;</span>
+<span class="nc" id="L113">                Query query = session.createQuery(sqlQuery);</span>
+<span class="nc" id="L114">                query.executeUpdate();</span>
+<span class="nc" id="L115">                tx.commit();</span>
+<span class="nc" id="L116">            } catch (Exception e) {</span>
+<span class="nc" id="L117">                e.printStackTrace();</span>
+            }
+<span class="nc" id="L119">        } else {</span>
+			try {
+                // session = this.hibernateFactory.openSession();
+<span class="nc" id="L122">                tx = session.beginTransaction();</span>
+<span class="nc" id="L123">                String sqlQuery = &quot;UPDATE Amfi a SET a.day1 = &quot; + nav + &quot; where a.SchemeCode = &quot; + schemeCode;</span>
+<span class="nc" id="L124">                Query query = session.createQuery(sqlQuery);</span>
+<span class="nc" id="L125">                query.executeUpdate();</span>
+<span class="nc" id="L126">                tx.commit();</span>
+<span class="nc" id="L127">            } catch (Exception e) {</span>
+<span class="nc" id="L128">                e.printStackTrace();</span>
+            }
+				
+		}
+			
+<span class="nc" id="L133">    }</span>
+
+    @Transactional
+    public void getAmfiCode() {
+<span class="nc" id="L137">        List&lt;Amc&gt; amc = amcRepository.findAll();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (Amc result : amc) {</span>
+<span class="nc" id="L139">            String amc_code = result.getAmc_code();</span>
+<span class="nc" id="L140">            amfiRepository.update(amc_code);</span>
+        }
+<span class="nc" id="L142">    }</span>
+
+    public List&lt;Amfi&gt; getAmcName(String name) {
+<span class="nc" id="L145">        List&lt;Amfi&gt; nav = amfiRepository.findByAmc_code(name);</span>
+<span class="nc" id="L146">        return nav;</span>
+
+    }
+
+    public List&lt;Amc&gt; getAllAmc() {
+<span class="nc" id="L151">        List&lt;Amc&gt; nav = amcRepository.findAll();</span>
+<span class="nc" id="L152">        return nav;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

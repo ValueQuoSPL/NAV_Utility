@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Amfi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Amfi</a> &gt; <a href="index.source.html" class="el_package">com.valuequo.domain</a> &gt; <span class="el_source">Amfi.java</span></div><h1>Amfi.java</h1><pre class="source lang-java linenums">package com.valuequo.domain;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Date;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.stereotype.Component;
+
+@Entity
+@Table(name = &quot;nav&quot;)
+@Component
+<span class="fc" id="L20">public class Amfi implements Serializable {</span>
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = &quot;schemecode&quot;)
+    private String SchemeCode;
+   
+    @Column(name = &quot;amc_code&quot;)
+    private String amc_code;
+
+    @Column(name = &quot;isindivpayoutisingrowth&quot;)
+    private String ISINDivPayoutISINGrowth;
+
+    @Column(name = &quot;isindivreinvestment&quot;)
+    private String ISINDivReinvestment;
+    
+    @Column(name = &quot;schemename&quot;)
+    private String SchemeName;
+
+    @Column(name = &quot;day1&quot;)
+    private String day1;
+
+    @Column(name = &quot;date&quot;)
+    private String Date;
+
+    @Column(name = &quot;day2&quot;)
+    private String day2;
+
+    @Column(name = &quot;day3&quot;)
+    private String day3;
+
+    @Column(name = &quot;day4&quot;)
+    private String day4;
+
+    @Column(name = &quot;day5&quot;)
+    private String day5;
+
+    @Column(name = &quot;day6&quot;)
+    private String day6;
+
+    @Column(name = &quot;day7&quot;)
+    private String day7;
+
+    @Column(name = &quot;day8&quot;)
+    private String day8;
+
+    @Column(name = &quot;day9&quot;)
+    private String day9;
+
+    @Column(name = &quot;day10&quot;)
+    private String day10;
+
+    @Column(name = &quot;day11&quot;)
+    private String day11;
+
+    @Column(name = &quot;day12&quot;)
+    private String day12;
+
+    @Column(name = &quot;day13&quot;)
+    private String day13;
+
+    @Column(name = &quot;day14&quot;)
+    private String day14;
+
+    @Column(name = &quot;day15&quot;)
+    private String day15;
+
+    @Column(name = &quot;day16&quot;)
+    private String day16;
+
+    @Column(name = &quot;day17&quot;)
+    private String day17;
+
+    @Column(name = &quot;day18&quot;)
+    private String day18;
+
+    @Column(name = &quot;day19&quot;)
+    private String day19;
+
+    @Column(name = &quot;day20&quot;)
+    private String day20;
+
+    @Column(name = &quot;day21&quot;)
+    private String day21;
+
+    @Column(name = &quot;day22&quot;)
+    private String day22;
+
+    @Column(name = &quot;day23&quot;)
+    private String day23;
+
+    @Column(name = &quot;day24&quot;)
+    private String day24;
+
+    @Column(name = &quot;day25&quot;)
+    private String day25;
+
+    @Column(name = &quot;day26&quot;)
+    private String day26;
+
+    @Column(name = &quot;day27&quot;)
+    private String day27;
+
+    @Column(name = &quot;day28&quot;)
+    private String day28;
+
+    @Column(name = &quot;day29&quot;)
+    private String day29;
+
+    @Column(name = &quot;day30&quot;)
+    private String day30;
+
+    @Column(name = &quot;day31&quot;)
+    private String day31;
+
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+<span class="nc" id="L144">        return id;</span>
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+<span class="nc" id="L151">        this.id = id;</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * @return the schemeCode
+     */
+    public String getSchemeCode() {
+<span class="nc" id="L158">        return SchemeCode;</span>
+    }
+
+    /**
+     * @param schemeCode the schemeCode to set
+     */
+    public void setSchemeCode(String schemeCode) {
+<span class="nc" id="L165">        SchemeCode = schemeCode;</span>
+<span class="nc" id="L166">    }</span>
+
+    /**
+     * @return the iSINDivPayoutISINGrowth
+     */
+    public String getISINDivPayoutISINGrowth() {
+<span class="nc" id="L172">        return ISINDivPayoutISINGrowth;</span>
+    }
+
+    /**
+     * @param iSINDivPayoutISINGrowth the iSINDivPayoutISINGrowth to set
+     */
+    public void setISINDivPayoutISINGrowth(String iSINDivPayoutISINGrowth) {
+<span class="nc" id="L179">        ISINDivPayoutISINGrowth = iSINDivPayoutISINGrowth;</span>
+<span class="nc" id="L180">    }</span>
+
+    /**
+     * @return the iSINDivReinvestment
+     */
+    public String getISINDivReinvestment() {
+<span class="nc" id="L186">        return ISINDivReinvestment;</span>
+    }
+
+    /**
+     * @param iSINDivReinvestment the iSINDivReinvestment to set
+     */
+    public void setISINDivReinvestment(String iSINDivReinvestment) {
+<span class="nc" id="L193">        ISINDivReinvestment = iSINDivReinvestment;</span>
+<span class="nc" id="L194">    }</span>
+
+    /**
+     * @return the schemeName
+     */
+    public String getSchemeName() {
+<span class="nc" id="L200">        return SchemeName;</span>
+    }
+
+    /**
+     * @param schemeName the schemeName to set
+     */
+    public void setSchemeName(String schemeName) {
+<span class="nc" id="L207">        SchemeName = schemeName;</span>
+<span class="nc" id="L208">    }</span>
+
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+<span class="nc" id="L215">        return Date;</span>
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+<span class="nc" id="L222">        Date = date;</span>
+<span class="nc" id="L223">    }</span>
+
+	public String getAmc_code() {
+<span class="nc" id="L226">		return amc_code;</span>
+	}
+
+	public void setAmc_code(String amc_code) {
+<span class="nc" id="L230">		this.amc_code = amc_code;</span>
+<span class="nc" id="L231">	}</span>
+
+    /**
+     * @return the day2
+     */
+    public String getDay2() {
+<span class="nc" id="L237">        return day2;</span>
+    }
+
+    /**
+     * @param day2 the day2 to set
+     */
+    public void setDay2(String day2) {
+<span class="nc" id="L244">        this.day2 = day2;</span>
+<span class="nc" id="L245">    }</span>
+
+    /**
+     * @return the day3
+     */
+    public String getDay3() {
+<span class="nc" id="L251">        return day3;</span>
+    }
+
+    /**
+     * @param day3 the day3 to set
+     */
+    public void setDay3(String day3) {
+<span class="nc" id="L258">        this.day3 = day3;</span>
+<span class="nc" id="L259">    }</span>
+
+    /**
+     * @return the day4
+     */
+    public String getDay4() {
+<span class="nc" id="L265">        return day4;</span>
+    }
+
+    /**
+     * @param day4 the day4 to set
+     */
+    public void setDay4(String day4) {
+<span class="nc" id="L272">        this.day4 = day4;</span>
+<span class="nc" id="L273">    }</span>
+
+    /**
+     * @return the day5
+     */
+    public String getDay5() {
+<span class="nc" id="L279">        return day5;</span>
+    }
+
+    /**
+     * @param day5 the day5 to set
+     */
+    public void setDay5(String day5) {
+<span class="nc" id="L286">        this.day5 = day5;</span>
+<span class="nc" id="L287">    }</span>
+
+    /**
+     * @return the day6
+     */
+    public String getDay6() {
+<span class="nc" id="L293">        return day6;</span>
+    }
+
+    /**
+     * @param day6 the day6 to set
+     */
+    public void setDay6(String day6) {
+<span class="nc" id="L300">        this.day6 = day6;</span>
+<span class="nc" id="L301">    }</span>
+
+    /**
+     * @return the day7
+     */
+    public String getDay7() {
+<span class="nc" id="L307">        return day7;</span>
+    }
+
+    /**
+     * @param day7 the day7 to set
+     */
+    public void setDay7(String day7) {
+<span class="nc" id="L314">        this.day7 = day7;</span>
+<span class="nc" id="L315">    }</span>
+
+    /**
+     * @return the day8
+     */
+    public String getDay8() {
+<span class="nc" id="L321">        return day8;</span>
+    }
+
+    /**
+     * @param day8 the day8 to set
+     */
+    public void setDay8(String day8) {
+<span class="nc" id="L328">        this.day8 = day8;</span>
+<span class="nc" id="L329">    }</span>
+
+    /**
+     * @return the day9
+     */
+    public String getDay9() {
+<span class="nc" id="L335">        return day9;</span>
+    }
+
+    /**
+     * @param day9 the day9 to set
+     */
+    public void setDay9(String day9) {
+<span class="nc" id="L342">        this.day9 = day9;</span>
+<span class="nc" id="L343">    }</span>
+
+    /**
+     * @return the day10
+     */
+    public String getDay10() {
+<span class="nc" id="L349">        return day10;</span>
+    }
+
+    /**
+     * @param day10 the day10 to set
+     */
+    public void setDay10(String day10) {
+<span class="nc" id="L356">        this.day10 = day10;</span>
+<span class="nc" id="L357">    }</span>
+
+    /**
+     * @return the day11
+     */
+    public String getDay11() {
+<span class="nc" id="L363">        return day11;</span>
+    }
+
+    /**
+     * @param day11 the day11 to set
+     */
+    public void setDay11(String day11) {
+<span class="nc" id="L370">        this.day11 = day11;</span>
+<span class="nc" id="L371">    }</span>
+
+    /**
+     * @return the day12
+     */
+    public String getDay12() {
+<span class="nc" id="L377">        return day12;</span>
+    }
+
+    /**
+     * @param day12 the day12 to set
+     */
+    public void setDay12(String day12) {
+<span class="nc" id="L384">        this.day12 = day12;</span>
+<span class="nc" id="L385">    }</span>
+
+    /**
+     * @return the day13
+     */
+    public String getDay13() {
+<span class="nc" id="L391">        return day13;</span>
+    }
+
+    /**
+     * @param day13 the day13 to set
+     */
+    public void setDay13(String day13) {
+<span class="nc" id="L398">        this.day13 = day13;</span>
+<span class="nc" id="L399">    }</span>
+
+    /**
+     * @return the day14
+     */
+    public String getDay14() {
+<span class="nc" id="L405">        return day14;</span>
+    }
+
+    /**
+     * @param day14 the day14 to set
+     */
+    public void setDay14(String day14) {
+<span class="nc" id="L412">        this.day14 = day14;</span>
+<span class="nc" id="L413">    }</span>
+
+    /**
+     * @return the day15
+     */
+    public String getDay15() {
+<span class="nc" id="L419">        return day15;</span>
+    }
+
+    /**
+     * @param day15 the day15 to set
+     */
+    public void setDay15(String day15) {
+<span class="nc" id="L426">        this.day15 = day15;</span>
+<span class="nc" id="L427">    }</span>
+
+    /**
+     * @return the day16
+     */
+    public String getDay16() {
+<span class="nc" id="L433">        return day16;</span>
+    }
+
+    /**
+     * @param day16 the day16 to set
+     */
+    public void setDay16(String day16) {
+<span class="nc" id="L440">        this.day16 = day16;</span>
+<span class="nc" id="L441">    }</span>
+
+    /**
+     * @return the day17
+     */
+    public String getDay17() {
+<span class="nc" id="L447">        return day17;</span>
+    }
+
+    /**
+     * @param day17 the day17 to set
+     */
+    public void setDay17(String day17) {
+<span class="nc" id="L454">        this.day17 = day17;</span>
+<span class="nc" id="L455">    }</span>
+
+    /**
+     * @return the day18
+     */
+    public String getDay18() {
+<span class="nc" id="L461">        return day18;</span>
+    }
+
+    /**
+     * @param day18 the day18 to set
+     */
+    public void setDay18(String day18) {
+<span class="nc" id="L468">        this.day18 = day18;</span>
+<span class="nc" id="L469">    }</span>
+
+    /**
+     * @return the day19
+     */
+    public String getDay19() {
+<span class="nc" id="L475">        return day19;</span>
+    }
+
+    /**
+     * @param day19 the day19 to set
+     */
+    public void setDay19(String day19) {
+<span class="nc" id="L482">        this.day19 = day19;</span>
+<span class="nc" id="L483">    }</span>
+
+    /**
+     * @return the day20
+     */
+    public String getDay20() {
+<span class="nc" id="L489">        return day20;</span>
+    }
+
+    /**
+     * @param day20 the day20 to set
+     */
+    public void setDay20(String day20) {
+<span class="nc" id="L496">        this.day20 = day20;</span>
+<span class="nc" id="L497">    }</span>
+
+    /**
+     * @return the day21
+     */
+    public String getDay21() {
+<span class="nc" id="L503">        return day21;</span>
+    }
+
+    /**
+     * @param day21 the day21 to set
+     */
+    public void setDay21(String day21) {
+<span class="nc" id="L510">        this.day21 = day21;</span>
+<span class="nc" id="L511">    }</span>
+
+    /**
+     * @return the day22
+     */
+    public String getDay22() {
+<span class="nc" id="L517">        return day22;</span>
+    }
+
+    /**
+     * @param day22 the day22 to set
+     */
+    public void setDay22(String day22) {
+<span class="nc" id="L524">        this.day22 = day22;</span>
+<span class="nc" id="L525">    }</span>
+
+    /**
+     * @return the day23
+     */
+    public String getDay23() {
+<span class="nc" id="L531">        return day23;</span>
+    }
+
+    /**
+     * @param day23 the day23 to set
+     */
+    public void setDay23(String day23) {
+<span class="nc" id="L538">        this.day23 = day23;</span>
+<span class="nc" id="L539">    }</span>
+
+    /**
+     * @return the day24
+     */
+    public String getDay24() {
+<span class="nc" id="L545">        return day24;</span>
+    }
+
+    /**
+     * @param day24 the day24 to set
+     */
+    public void setDay24(String day24) {
+<span class="nc" id="L552">        this.day24 = day24;</span>
+<span class="nc" id="L553">    }</span>
+
+    /**
+     * @return the day25
+     */
+    public String getDay25() {
+<span class="nc" id="L559">        return day25;</span>
+    }
+
+    /**
+     * @param day25 the day25 to set
+     */
+    public void setDay25(String day25) {
+<span class="nc" id="L566">        this.day25 = day25;</span>
+<span class="nc" id="L567">    }</span>
+
+    /**
+     * @return the day26
+     */
+    public String getDay26() {
+<span class="nc" id="L573">        return day26;</span>
+    }
+
+    /**
+     * @param day26 the day26 to set
+     */
+    public void setDay26(String day26) {
+<span class="nc" id="L580">        this.day26 = day26;</span>
+<span class="nc" id="L581">    }</span>
+
+    /**
+     * @return the day27
+     */
+    public String getDay27() {
+<span class="nc" id="L587">        return day27;</span>
+    }
+
+    /**
+     * @param day27 the day27 to set
+     */
+    public void setDay27(String day27) {
+<span class="nc" id="L594">        this.day27 = day27;</span>
+<span class="nc" id="L595">    }</span>
+
+    /**
+     * @return the day28
+     */
+    public String getDay28() {
+<span class="nc" id="L601">        return day28;</span>
+    }
+
+    /**
+     * @param day28 the day28 to set
+     */
+    public void setDay28(String day28) {
+<span class="nc" id="L608">        this.day28 = day28;</span>
+<span class="nc" id="L609">    }</span>
+
+    /**
+     * @return the day29
+     */
+    public String getDay29() {
+<span class="nc" id="L615">        return day29;</span>
+    }
+
+    /**
+     * @param day29 the day29 to set
+     */
+    public void setDay29(String day29) {
+<span class="nc" id="L622">        this.day29 = day29;</span>
+<span class="nc" id="L623">    }</span>
+
+    /**
+     * @return the day30
+     */
+    public String getDay30() {
+<span class="nc" id="L629">        return day30;</span>
+    }
+
+    /**
+     * @param day30 the day30 to set
+     */
+    public void setDay30(String day30) {
+<span class="nc" id="L636">        this.day30 = day30;</span>
+<span class="nc" id="L637">    }</span>
+
+    /**
+     * @return the day31
+     */
+    public String getDay31() {
+<span class="nc" id="L643">        return day31;</span>
+    }
+
+    /**
+     * @param day31 the day31 to set
+     */
+    public void setDay31(String day31) {
+<span class="nc" id="L650">        this.day31 = day31;</span>
+<span class="nc" id="L651">    }</span>
+
+    /**
+     * @return the day1
+     */
+    public String getDay1() {
+<span class="nc" id="L657">        return day1;</span>
+    }
+
+    /**
+     * @param day1 the day1 to set
+     */
+    public void setDay1(String day1) {
+<span class="nc" id="L664">        this.day1 = day1;</span>
+<span class="nc" id="L665">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

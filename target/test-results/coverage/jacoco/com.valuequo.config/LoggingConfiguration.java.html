@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoggingConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Amfi</a> &gt; <a href="index.source.html" class="el_package">com.valuequo.config</a> &gt; <span class="el_source">LoggingConfiguration.java</span></div><h1>LoggingConfiguration.java</h1><pre class="source lang-java linenums">package com.valuequo.config;
+
+import java.net.InetSocketAddress;
+import java.util.Iterator;
+
+import io.github.jhipster.config.JHipsterProperties;
+
+import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.boolex.OnMarkerEvaluator;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.LoggerContextListener;
+import ch.qos.logback.core.Appender;
+import ch.qos.logback.core.filter.EvaluatorFilter;
+import ch.qos.logback.core.spi.ContextAwareBase;
+import ch.qos.logback.core.spi.FilterReply;
+import net.logstash.logback.appender.LogstashTcpSocketAppender;
+import net.logstash.logback.encoder.LogstashEncoder;
+import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@RefreshScope
+public class LoggingConfiguration {
+
+    private static final String LOGSTASH_APPENDER_NAME = &quot;LOGSTASH&quot;;
+
+    private static final String ASYNC_LOGSTASH_APPENDER_NAME = &quot;ASYNC_LOGSTASH&quot;;
+
+<span class="fc" id="L38">    private final Logger log = LoggerFactory.getLogger(LoggingConfiguration.class);</span>
+
+<span class="fc" id="L40">    private LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();</span>
+
+    private final String appName;
+
+    private final String serverPort;
+
+    private final EurekaInstanceConfigBean eurekaInstanceConfigBean;
+
+    private final JHipsterProperties jHipsterProperties;
+
+<span class="fc" id="L50">    public LoggingConfiguration(@Value(&quot;${spring.application.name}&quot;) String appName, @Value(&quot;${server.port}&quot;) String serverPort,</span>
+        @Autowired(required = false) EurekaInstanceConfigBean eurekaInstanceConfigBean, JHipsterProperties jHipsterProperties) {
+<span class="fc" id="L52">        this.appName = appName;</span>
+<span class="fc" id="L53">        this.serverPort = serverPort;</span>
+<span class="fc" id="L54">        this.eurekaInstanceConfigBean = eurekaInstanceConfigBean;</span>
+<span class="fc" id="L55">        this.jHipsterProperties = jHipsterProperties;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (jHipsterProperties.getLogging().getLogstash().isEnabled()) {</span>
+<span class="fc" id="L57">            addLogstashAppender(context);</span>
+<span class="fc" id="L58">            addContextListener(context);</span>
+        }
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (jHipsterProperties.getMetrics().getLogs().isEnabled()) {</span>
+<span class="fc" id="L61">            setMetricsMarkerLogbackFilter(context);</span>
+        }
+<span class="fc" id="L63">    }</span>
+
+    private void addContextListener(LoggerContext context) {
+<span class="fc" id="L66">        LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener();</span>
+<span class="fc" id="L67">        loggerContextListener.setContext(context);</span>
+<span class="fc" id="L68">        context.addListener(loggerContextListener);</span>
+<span class="fc" id="L69">    }</span>
+
+    private void addLogstashAppender(LoggerContext context) {
+<span class="fc" id="L72">        log.info(&quot;Initializing Logstash logging&quot;);</span>
+
+<span class="fc" id="L74">        LogstashTcpSocketAppender logstashAppender = new LogstashTcpSocketAppender();</span>
+<span class="fc" id="L75">        logstashAppender.setName(LOGSTASH_APPENDER_NAME);</span>
+<span class="fc" id="L76">        logstashAppender.setContext(context);</span>
+<span class="fc" id="L77">        String customFields = &quot;{\&quot;app_name\&quot;:\&quot;&quot; + appName + &quot;\&quot;,\&quot;app_port\&quot;:\&quot;&quot; + serverPort + &quot;\&quot;}&quot;;</span>
+
+        // More documentation is available at: https://github.com/logstash/logstash-logback-encoder
+<span class="fc" id="L80">        LogstashEncoder logstashEncoder=new LogstashEncoder();</span>
+        // Set the Logstash appender config from JHipster properties
+<span class="fc" id="L82">        logstashEncoder.setCustomFields(customFields);</span>
+        // Set the Logstash appender config from JHipster properties
+<span class="fc" id="L84">        logstashAppender.addDestinations(new InetSocketAddress(jHipsterProperties.getLogging().getLogstash().getHost(),jHipsterProperties.getLogging().getLogstash().getPort()));</span>
+
+<span class="fc" id="L86">        ShortenedThrowableConverter throwableConverter = new ShortenedThrowableConverter();</span>
+<span class="fc" id="L87">        throwableConverter.setRootCauseFirst(true);</span>
+<span class="fc" id="L88">        logstashEncoder.setThrowableConverter(throwableConverter);</span>
+<span class="fc" id="L89">        logstashEncoder.setCustomFields(customFields);</span>
+
+<span class="fc" id="L91">        logstashAppender.setEncoder(logstashEncoder);</span>
+<span class="fc" id="L92">        logstashAppender.start();</span>
+
+        // Wrap the appender in an Async appender for performance
+<span class="fc" id="L95">        AsyncAppender asyncLogstashAppender = new AsyncAppender();</span>
+<span class="fc" id="L96">        asyncLogstashAppender.setContext(context);</span>
+<span class="fc" id="L97">        asyncLogstashAppender.setName(ASYNC_LOGSTASH_APPENDER_NAME);</span>
+<span class="fc" id="L98">        asyncLogstashAppender.setQueueSize(jHipsterProperties.getLogging().getLogstash().getQueueSize());</span>
+<span class="fc" id="L99">        asyncLogstashAppender.addAppender(logstashAppender);</span>
+<span class="fc" id="L100">        asyncLogstashAppender.start();</span>
+
+<span class="fc" id="L102">        context.getLogger(&quot;ROOT&quot;).addAppender(asyncLogstashAppender);</span>
+<span class="fc" id="L103">    }</span>
+
+    // Configure a log filter to remove &quot;metrics&quot; logs from all appenders except the &quot;LOGSTASH&quot; appender
+    private void setMetricsMarkerLogbackFilter(LoggerContext context) {
+<span class="fc" id="L107">        log.info(&quot;Filtering metrics logs from all appenders except the {} appender&quot;, LOGSTASH_APPENDER_NAME);</span>
+<span class="fc" id="L108">        OnMarkerEvaluator onMarkerMetricsEvaluator = new OnMarkerEvaluator();</span>
+<span class="fc" id="L109">        onMarkerMetricsEvaluator.setContext(context);</span>
+<span class="fc" id="L110">        onMarkerMetricsEvaluator.addMarker(&quot;metrics&quot;);</span>
+<span class="fc" id="L111">        onMarkerMetricsEvaluator.start();</span>
+<span class="fc" id="L112">        EvaluatorFilter&lt;ILoggingEvent&gt; metricsFilter = new EvaluatorFilter&lt;&gt;();</span>
+<span class="fc" id="L113">        metricsFilter.setContext(context);</span>
+<span class="fc" id="L114">        metricsFilter.setEvaluator(onMarkerMetricsEvaluator);</span>
+<span class="fc" id="L115">        metricsFilter.setOnMatch(FilterReply.DENY);</span>
+<span class="fc" id="L116">        metricsFilter.start();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        for (ch.qos.logback.classic.Logger logger : context.getLoggerList()) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">            for (Iterator&lt;Appender&lt;ILoggingEvent&gt;&gt; it = logger.iteratorForAppenders(); it.hasNext();) {</span>
+<span class="fc" id="L120">                Appender&lt;ILoggingEvent&gt; appender = it.next();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                if (!appender.getName().equals(ASYNC_LOGSTASH_APPENDER_NAME)) {</span>
+<span class="fc" id="L122">                    log.debug(&quot;Filter metrics logs from the {} appender&quot;, appender.getName());</span>
+<span class="fc" id="L123">                    appender.setContext(context);</span>
+<span class="fc" id="L124">                    appender.addFilter(metricsFilter);</span>
+<span class="fc" id="L125">                    appender.start();</span>
+                }
+            }
+        }
+<span class="fc" id="L129">    }</span>
+
+    /**
+     * Logback configuration is achieved by configuration file and API.
+     * When configuration file change is detected, the configuration is reset.
+     * This listener ensures that the programmatic configuration is also re-applied after reset.
+     */
+<span class="fc" id="L136">    class LogbackLoggerContextListener extends ContextAwareBase implements LoggerContextListener {</span>
+
+        @Override
+        public boolean isResetResistant() {
+<span class="nc" id="L140">            return true;</span>
+        }
+
+        @Override
+        public void onStart(LoggerContext context) {
+<span class="nc" id="L145">            addLogstashAppender(context);</span>
+<span class="nc" id="L146">        }</span>
+
+        @Override
+        public void onReset(LoggerContext context) {
+<span class="nc" id="L150">            addLogstashAppender(context);</span>
+<span class="nc" id="L151">        }</span>
+
+        @Override
+        public void onStop(LoggerContext context) {
+            // Nothing to do.
+<span class="nc" id="L156">        }</span>
+
+        @Override
+        public void onLevelChange(ch.qos.logback.classic.Logger logger, Level level) {
+            // Nothing to do.
+<span class="fc" id="L161">        }</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

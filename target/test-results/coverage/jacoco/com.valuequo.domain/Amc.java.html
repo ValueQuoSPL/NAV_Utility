@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Amc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Amfi</a> &gt; <a href="index.source.html" class="el_package">com.valuequo.domain</a> &gt; <span class="el_source">Amc.java</span></div><h1>Amc.java</h1><pre class="source lang-java linenums">package com.valuequo.domain;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+import org.springframework.stereotype.Component;
+
+@Entity
+@Table(name = &quot;amc&quot;)
+@Component
+<span class="fc" id="L19">public class Amc implements Serializable {</span>
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = &quot;AMC_code&quot;)
+    private String amc_code;
+
+    @Column(name = &quot;AMC_Name&quot;)
+    private String amc_name;
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+<span class="nc" id="L35">        return id;</span>
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+<span class="nc" id="L42">        this.id = id;</span>
+<span class="nc" id="L43">    }</span>
+
+    /**
+     * @return the amc_code
+     */
+    public String getAmc_code() {
+<span class="nc" id="L49">        return amc_code;</span>
+    }
+
+    /**
+     * @param amc_code the amc_code to set
+     */
+    public void setAmc_code(String amc_code) {
+<span class="nc" id="L56">        this.amc_code = amc_code;</span>
+<span class="nc" id="L57">    }</span>
+
+    /**
+     * @return the amc_name
+     */
+    public String getAmc_name() {
+<span class="nc" id="L63">        return amc_name;</span>
+    }
+
+    /**
+     * @param amc_name the amc_name to set
+     */
+    public void setAmc_name(String amc_name) {
+<span class="nc" id="L70">        this.amc_name = amc_name;</span>
+<span class="nc" id="L71">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
